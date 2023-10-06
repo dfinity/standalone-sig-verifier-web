@@ -1,0 +1,15 @@
+[package]
+name = "standalone-sig-verifier-web"
+version = "1.0.0"
+edition = "2021"
+description = "Standalone crypto library to verify cryptographic signatures for the Internet Computer"
+license-file = "LICENSE"
+repository = "https://github.com/dfinity/standalone-sig-verifier-web"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+ic-crypto-standalone-sig-verifier = { git = "https://github.com/dfinity/ic", rev = "afaf16ec5b21e3bbf2c2bf6ff7c766542ec52a59" }
+ic-types = { git = "https://github.com/dfinity/ic", rev = "afaf16ec5b21e3bbf2c2bf6ff7c766542ec52a59" }
+wasm-bindgen = "0.2"
