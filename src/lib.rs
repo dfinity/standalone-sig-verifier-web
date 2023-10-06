@@ -7,7 +7,7 @@ use ic_crypto_standalone_sig_verifier as ic_sig_ver;
 /// Verifies a basic (i.e. not a canister signature) IC supported signature.
 /// Supported signature schemes: https://internetcomputer.org/docs/current/references/ic-interface-spec/#signatures
 ///
-/// Throws an error if the signature is invalid.
+/// Throws an error if the signature verification fails.
 #[wasm_bindgen(js_name = verifyBasicSignature)]
 pub fn verify_basic_sig_by_public_key(msg: &[u8], signature: &[u8], public_key: &[u8]) -> Result<(), String> {
     let (public_key, _) = ic_sig_ver::user_public_key_from_bytes(public_key).map_err(|e| e.to_string())?;
@@ -17,7 +17,7 @@ pub fn verify_basic_sig_by_public_key(msg: &[u8], signature: &[u8], public_key: 
 /// Verifies an IC canister signature.
 /// More details: https://internetcomputer.org/docs/current/references/ic-interface-spec/#canister-signatures
 ///
-/// Throws an error if the signature is invalid.
+/// Throws an error if the signature verification fails.
 #[wasm_bindgen(js_name = verifyCanisterSignature)]
 pub fn verify_canister_sig(
     message: &[u8],
@@ -32,7 +32,7 @@ pub fn verify_canister_sig(
 /// Verifies any IC supported signature.
 /// Supported signature schemes: https://internetcomputer.org/docs/current/references/ic-interface-spec/#signatures
 ///
-/// Throws an error if the signature is invalid.
+/// Throws an error if the signature verification fails.
 #[wasm_bindgen(js_name = verifyIcSignature)]
 pub fn verify_ic_signature(
     message: &[u8],
