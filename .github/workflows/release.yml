@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'release-[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  release:
+    name: Publish Release
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust: [ 1.73.0 ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Rust
+        run: |
+          rustup update ${{ matrix.rust }} --no-self-update
+          rustup default ${{ matrix.rust }}
+          rustup component add rustfmt
+          rustup component add clippy
+
+      - name: Install wasm-pack
+        run: cargo install wasm-pack
+
+      - name: Build
+        run: wasm-pack build --target web --out-dir dist --release
+
+      - name: Create Github release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: '${{ github.ref_name }}'
+          commit: 'main'
+
+      - name: Release @dfinity/standalone-sig-verifier-web NPM package
+        working-directory: dist
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
