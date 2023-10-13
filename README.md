@@ -1,5 +1,5 @@
 # standalone-sig-verifier-web
-Small wrapper around the `ic-standalone-sig-verifier` rust crate ([code](https://github.com/dfinity/ic/tree/master/rs/crypto/standalone-sig-verifier)) to publish it as a browser compatible library to npm.
+JS/TS Wrapper for the `ic-standalone-sig-verifier` rust crate ([code](https://github.com/dfinity/ic/tree/master/rs/crypto/standalone-sig-verifier)) to publish it as a browser / node compatible library to npm.
 
 > _**Warning:**_ There are some caveats to using this library:
 > 1. **Verifying signatures in the front-end is generally unsafe!** Malicious users could modify the front-end code and bypass the signature verification. This library is intended for use in demos, prototypes, backends and other situations where the code either cannot be tampered with _or_ the tampering does not pose a security risk.
