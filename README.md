@@ -15,7 +15,7 @@ JS/TS Wrapper for the `ic-standalone-sig-verifier` rust crate ([code](https://gi
 ## Building
 Run the following command
 ```bash
-wasm-pack build --target web --out-dir dist --release
+wasm-pack build --target web --out-dir dist --release --scope dfinity
 ```
 ## Usage Example
 
