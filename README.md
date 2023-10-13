@@ -17,3 +17,21 @@ Run the following command
 ```bash
 wasm-pack build --target web --out-dir dist --release
 ```
+## Usage Example
+
+```js
+import initSigVerifier, {verifyIcSignature} from '@dfinity/standalone-sig-verifier-web';
+
+async function example(dataRaw, signatureRaw, derPublicKey, root_key) {
+    // load wasm module
+    await initSigVerifier(); 
+    try {
+        // call the signature verification wasm function
+        verifyIcSignature(dataRaw, signatureRaw, derPublicKey, root_key);
+        console.log('signature verified successfully')
+    } catch (error) {
+        // the library throws an error if the signature is invalid
+        console.error('signature verifcation failed', error)
+    }
+}
+```
