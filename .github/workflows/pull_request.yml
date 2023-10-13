@@ -34,7 +34,7 @@ jobs:
         run: cargo fmt --all -- --check
 
       - name: Clippy
-        run: cargo clippy --tests --benches -- -D clippy::all
+        run: cargo clippy --tests --benches -- -D clippy::all -D warnings
 
       - name: Build
         run: wasm-pack build --target web --out-dir dist --release
