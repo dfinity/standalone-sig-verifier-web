@@ -70,7 +70,7 @@ pub fn verify_ic_signature(
 }
 
 fn root_public_key_from_bytes(ic_root_public_key: &[u8]) -> Result<IcRootOfTrust, String> {
-    let root_key_bytes: [u8; 96] = ic_root_public_key.clone().try_into().map_err(|_| {
+    let root_key_bytes: [u8; 96] = ic_root_public_key.try_into().map_err(|_| {
         format!(
             "Invalid length of ic root public key: expected 96 bytes, got {}",
             ic_root_public_key.len()
