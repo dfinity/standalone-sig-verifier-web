@@ -1,6 +1,7 @@
 name: Release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'release-*'
@@ -8,6 +9,10 @@ on:
 jobs:
   release:
     name: Publish Release
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -15,12 +20,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           fetch-depth: 0
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6
         with:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
@@ -39,14 +44,16 @@ jobs:
         run: wasm-pack build --target web --out-dir dist --release --scope dfinity
 
       - name: Create Github release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b # v1.20.0
         with:
           tag: '${{ github.ref_name }}'
           commit: 'main'
 
       - name: Release @dfinity/standalone-sig-verifier-web NPM package
         working-directory: dist
-        run: npm publish --access public
+        run: |
+          npm install -g npm@v11
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
